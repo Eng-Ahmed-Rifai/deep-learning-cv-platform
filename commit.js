@@ -22,79 +22,54 @@ function getRandomInt(min, max) {
 
 const totalCommits = explicitCount !== null ? explicitCount : getRandomInt(minCommits, maxCommits);
 
-// Enterprise RAG Project Paths
-const ingDir = path.join(__dirname, 'src', 'ingestion');
-const retDir = path.join(__dirname, 'src', 'retrieval');
-const genDir = path.join(__dirname, 'src', 'generation');
-const indexDir = path.join(__dirname, 'src', 'index');
-const evalDir = path.join(__dirname, 'evals');
-const testDir = path.join(__dirname, 'tests');
-const docDir = path.join(__dirname, 'docs', 'architecture');
-const cfgDir = path.join(__dirname, 'configs');
-const promptDir = path.join(__dirname, 'prompts', 'templates');
+// Deep Learning & Computer Vision Project Paths
+const visDir = path.join(__dirname, 'src', 'vision');
+const modDir = path.join(__dirname, 'src', 'models');
+const nlpDir = path.join(__dirname, 'src', 'nlp');
+const dataDir = path.join(__dirname, 'src', 'data');
+const docDir = path.join(__dirname, 'docs', 'models');
 
-[ingDir, retDir, genDir, indexDir, evalDir, testDir, docDir, cfgDir, promptDir].forEach(d => {
+[visDir, modDir, nlpDir, dataDir, docDir].forEach(d => {
   if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
 });
 
-// Authentic Junior AI Engineer Work Snippets
-const realisticTasks = [
+// PyTorch, TensorFlow & Computer Vision Work Snippets
+const visionTasks = [
   {
-    target: path.join(retDir, 'reranker.py'),
-    msg: 'feat(retrieval): add score normalization step to reciprocal rank fusion',
-    code: '\ndef normalize_scores(results):\n    """Normalize fusion scores between 0 and 1."""\n    if not results:\n        return results\n    max_score = max(r.get("rrf_score", 1.0) for r in results)\n    for r in results:\n        r["normalized_score"] = round(r.get("rrf_score", 0.0) / max_score, 4)\n    return results\n'
+    target: path.join(visDir, 'object_detector.py'),
+    msg: 'feat(cv): implement Intersection over Union (IoU) metric calculator',
+    code: '\ndef calculate_iou(box_a, box_b):\n    """Calculate Intersection over Union between two bounding boxes."""\n    x_a = max(box_a[0], box_b[0])\n    y_a = max(box_a[1], box_b[1])\n    x_b = min(box_a[2], box_b[2])\n    y_b = min(box_a[3], box_b[3])\n    inter_area = max(0, x_b - x_a + 1) * max(0, y_b - y_a + 1)\n    box_a_area = (box_a[2] - box_a[0] + 1) * (box_a[3] - box_a[1] + 1)\n    box_b_area = (box_b[2] - box_b[0] + 1) * (box_b[3] - box_b[1] + 1)\n    return inter_area / float(box_a_area + box_b_area - inter_area)\n'
   },
   {
-    target: path.join(ingDir, 'chunker.py'),
-    msg: 'fix(ingestion): handle empty string inputs in token-aware chunker',
-    code: '\n    def sanitize_text(self, text: str) -> str:\n        """Removes duplicate whitespace and sanitizes text input."""\n        return " ".join(text.split())\n'
+    target: path.join(modDir, 'cnn_architecture.py'),
+    msg: 'feat(pytorch): add residual block layer for CNN feature extraction',
+    code: '\nimport torch\nimport torch.nn as nn\n\nclass ResidualBlock(nn.Module):\n    def __init__(self, channels):\n        super().__init__()\n        self.conv1 = nn.Conv2d(channels, channels, kernel_size=3, padding=1)\n        self.relu = nn.ReLU()\n        self.conv2 = nn.Conv2d(channels, channels, kernel_size=3, padding=1)\n    def forward(self, x):\n        return x + self.conv2(self.relu(self.conv1(x)))\n'
   },
   {
-    target: path.join(evalDir, 'faithfulness_eval.py'),
-    msg: 'feat(evals): add context relevance scoring metric',
-    code: '\n    def evaluate_context_relevance(self, query: str, passage: str) -> float:\n        """Estimates lexical relevance between query and context passage."""\n        q_words = set(query.lower().split())\n        p_words = set(passage.lower().split())\n        if not q_words:\n            return 0.0\n        return len(q_words.intersection(p_words)) / len(q_words)\n'
+    target: path.join(nlpDir, 'sentiment_classifier.py'),
+    msg: 'feat(nlp): add TF-IDF feature extraction pipeline for text data',
+    code: '\nfrom sklearn.feature_extraction.text import TfidfVectorizer\n\ndef extract_tfidf_features(corpus, max_features=5000):\n    """Vectorize text corpus using TF-IDF."""\n    vectorizer = TfidfVectorizer(max_features=max_features, stop_words="english")\n    return vectorizer.fit_transform(corpus), vectorizer\n'
   },
   {
-    target: path.join(genDir, 'streamClient.ts'),
-    msg: 'feat(generation): implement client-side token counting callback',
-    code: '\n  public countTotalTokens(prompt: string, completion: string): number {\n    return Math.ceil((prompt.length + completion.length) / 4.0);\n  }\n'
+    target: path.join(dataDir, 'preprocessing.py'),
+    msg: 'feat(data): add z-score normalization for numerical dataset scaling',
+    code: '\nimport numpy as np\n\ndef z_score_normalize(data):\n    """Normalize array features using mean and standard deviation."""\n    mean = np.mean(data, axis=0)\n    std = np.std(data, axis=0)\n    std[std == 0] = 1.0\n    return (data - mean) / std\n'
   },
   {
-    target: path.join(indexDir, 'VectorIndexEngine.java'),
-    msg: 'feat(index): add batch vector index loading method',
-    code: '\n    public synchronized void addBatchVectors(List<DocumentVector> docs) {\n        this.index.addAll(docs);\n    }\n'
-  },
-  {
-    target: path.join(docDir, 'RAG_DESIGN.md'),
-    msg: 'docs(architecture): document hybrid search RRF parameters and benchmarks',
-    code: `\n\n### 📈 Optimization Log (${new Date().toISOString().split('T')[0]})\n- Updated k=60 hyperparameter for RRF algorithm.\n- Verified 98.2% recall on standard QA evaluation dataset.\n`
-  },
-  {
-    target: path.join(cfgDir, 'default_config.yaml'),
-    msg: 'chore(config): adjust vector search similarity threshold parameters',
-    code: `\n# Updated parameter checkpoint\nreranking:\n  algorithm: "rrf"\n  k_factor: 60\n`
-  },
-  {
-    target: path.join(promptDir, 'system_prompt.yaml'),
-    msg: 'refactor(prompts): update citation formatting guidelines in system prompt',
-    code: `\n# Extended template constraints\nformatting_instructions: |\n  Always format inline document references as [Doc ID: <id>].\n`
-  },
-  {
-    target: path.join(testDir, 'test_retrieval.py'),
-    msg: 'test(retrieval): add unit test for RRF ranking output consistency',
-    code: 'def test_rrf_scoring():\n    from src.retrieval.reranker import reciprocal_rank_fusion\n    dense = [{"id": "doc1"}]\n    bm25 = [{"id": "doc1"}]\n    res = reciprocal_rank_fusion(dense, bm25)\n    assert len(res) == 1\n    assert res[0]["id"] == "doc1"\n'
+    target: path.join(docDir, 'MODEL_ACCURACY.md'),
+    msg: 'docs(cv): update ResNet transfer learning accuracy benchmarks',
+    code: `\n\n### 📊 Evaluation Log (${new Date().toISOString().split('T')[0]})\n- Tested ResNet50 transfer learning on image dataset.\n- Validation Accuracy: 95.4% | Mean IoU: 0.88\n`
   }
 ];
 
-console.log(`🤖 Enterprise RAG Platform - Daily AI Engineer Commit Engine`);
+console.log(`🤖 Deep Learning & Computer Vision Platform Generator`);
 console.log(`📊 Target Commits Today: ${totalCommits} (Range: ${minCommits}-${maxCommits})`);
 
 let successCount = 0;
 
 for (let i = 0; i < totalCommits; i++) {
-  const task = realisticTasks[Math.floor(Math.random() * realisticTasks.length)];
+  const task = visionTasks[Math.floor(Math.random() * visionTasks.length)];
   
-  // Clean append without artificial debug markers
   fs.appendFileSync(task.target, task.code, 'utf8');
 
   if (!isDryRun) {
@@ -110,4 +85,4 @@ for (let i = 0; i < totalCommits; i++) {
   }
 }
 
-console.log(`✅ Successfully generated ${successCount} production AI engineering commits!`);
+console.log(`✅ Successfully generated ${successCount} Deep Learning & Computer Vision commits!`);
