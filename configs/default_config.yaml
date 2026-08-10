@@ -1,0 +1,21 @@
+# Enterprise RAG & LLMOps Configuration
+model:
+  name: "gpt-4o-mini"
+  temperature: 0.2
+  max_tokens: 1024
+
+retrieval:
+  top_k: 5
+  similarity_threshold: 0.75
+  hybrid_search: true
+  alpha: 0.5  # Weight between BM25 and Dense vector score
+
+ingestion:
+  chunk_size: 512
+  chunk_overlap: 64
+  embedding_model: "text-embedding-3-small"
+
+vector_db:
+  provider: "pgvector"
+  index_type: "hnsw"
+  distance_metric: "cosine"

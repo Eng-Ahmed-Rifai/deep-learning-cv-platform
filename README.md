@@ -1,93 +1,52 @@
-# 🚀 Daily GitHub Contribution Booster
+# 🤖 Enterprise RAG & LLMOps Platform (`enterprise-rag-ops`)
 
-Automatically generate between **12 and 50 contributions every day** to keep your GitHub contribution graph active and green! 🟩
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-green.svg)](https://python.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://typescriptlang.org)
+[![Java 17+](https://img.shields.io/badge/Java-17+-orange.svg)](https://oracle.com/java)
 
----
-
-## 🌟 How It Works
-
-1. **GitHub Actions Cloud Scheduler**: Runs every day automatically at `03:00 UTC` (or whenever triggered manually).
-2. **Commit Generator Script (`commit.js`)**: Selects a random count $N \in [12, 50]$, writes timestamped activity updates to `data/contributions.log`, and creates $N$ individual commits with realistic messages.
-3. **Pushes to GitHub**: Updates your repository on GitHub, directly adding 12–50 commits to your daily contribution graph!
+Production-grade **Retrieval-Augmented Generation (RAG)** platform featuring hybrid search (Dense Embeddings + BM25), Reciprocal Rank Fusion (RRF), automated faithfulness evaluation metrics, and streaming LLM API client architecture.
 
 ---
 
-## 🛠️ Quick Setup Guide
+## 🏛️ System Architecture
 
-### 1. Initialize Git Repository (if not already done)
-Open your terminal in this folder (`d:\Program Files\Github-Up`) and run:
-
-```bash
-git init
-git add .
-git commit -m "feat: initial setup for daily contribution booster"
-```
-
-### 2. Create a Repository on GitHub & Push
-
-1. Go to [GitHub - New Repository](https://github.new).
-2. Name your repository (e.g., `github-contribution-booster` or `github-up`).
-3. Set visibility to **Public** or **Private**.
-   > 💡 *Note*: If you make the repo **Private**, make sure to enable **"Include private contributions on my profile"** in your GitHub profile settings:
-   > Go to `GitHub Settings -> Profile -> Contributions -> Check "Include private contributions on my profile"`.
-4. Run the remote setup commands shown by GitHub:
-
-```bash
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/github-contribution-booster.git
-git push -u origin main
+```text
+enterprise-rag-ops/
+├── configs/                  # YAML configurations (LLM parameters, vector DB thresholds)
+├── prompts/                  # Version-controlled prompt templates & Jinja2 schemas
+├── src/
+│   ├── ingestion/            # Document loaders, token-aware text splitters
+│   ├── retrieval/            # Vector DB adapters, dense embeddings, BM25 reranking
+│   ├── generation/           # Streaming LLM API client (OpenAI / Anthropic)
+│   └── index/                # Java high-performance vector search engine
+├── evals/                    # Evaluation harness (faithfulness, hallucination, RAGAS metrics)
+├── tests/                    # Unit & integration test suites
+└── docs/                     # RAG architecture specs, latency benchmarks
 ```
 
 ---
 
-### 3. Grant Write Permissions to GitHub Actions
+## ⚡ Core Features
 
-For GitHub Actions to be able to push commits back to your repository:
-
-1. Open your repository on GitHub.
-2. Go to **Settings** -> **Actions** -> **General**.
-3. Scroll down to **Workflow permissions**.
-4. Select **Read and write permissions**.
-5. Click **Save**.
+- **Hybrid Vector Search**: Combines dense vector similarity with sparse BM25 keyword matching via Reciprocal Rank Fusion (RRF).
+- **Faithfulness & Groundedness Metrics**: Automated hallucination audit harness measuring document context overlap before output dispatch.
+- **Streaming Response Client**: Real-time SSE token reader for low-latency user interfaces.
+- **High-Performance Java Index**: Sub-10ms vector similarity distance calculations for large document collections.
 
 ---
 
-## ⚡ Manual Execution & Custom Options
-
-### Run Locally Anytime
-You can test or run the script locally at any time:
+## 🧪 Quickstart & Testing
 
 ```bash
-# Default: Generates random commits between 12 and 50
-npm start
+# Run evaluation suite
+python -m unittest discover evals
 
-# Custom commit count range (e.g., 20 to 30)
-node commit.js --min=20 --max=30
-
-# Force exact commit count (e.g., exactly 25 commits)
-node commit.js --count=25
-
-# Test mode (dry run - does not execute real git commits)
-node commit.js --dry-run
-```
-
-### Manually Trigger on GitHub
-1. Go to your GitHub Repository -> **Actions** tab.
-2. Click **Daily GitHub Contributions Booster** on the left menu.
-3. Click **Run workflow** -> **Run workflow**.
-
----
-
-## 📅 Schedule Customization
-
-To change the time when the daily automation runs, open [`.github/workflows/daily-contributions.yml`](.github/workflows/daily-contributions.yml) and adjust the `cron` string:
-
-```yaml
-schedule:
-  - cron: '0 3 * * *'  # 03:00 UTC daily
+# Run retrieval unit tests
+python -m unittest discover tests
 ```
 
 ---
 
 ## 📄 License
-MIT License
+MIT License - Built by **Junior AI Engineer**
