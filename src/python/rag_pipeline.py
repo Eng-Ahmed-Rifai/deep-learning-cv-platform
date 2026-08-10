@@ -60,3 +60,9 @@ def filter_by_threshold(docs, threshold=0.75):
 def filter_by_threshold(docs, threshold=0.75):
     """Filter retrieved documents above confidence score threshold."""
     return [doc for doc in docs if doc.get("score", 0) >= threshold]
+
+// Updated at: 2026-08-10T20:18:33.467Z [Pulse 9/24]
+
+def filter_by_threshold(docs, threshold=0.75):
+    """Filter retrieved documents above confidence score threshold."""
+    return [doc for doc in docs if doc.get("score", 0) >= threshold]
