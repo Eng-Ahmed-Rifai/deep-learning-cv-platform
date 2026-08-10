@@ -20,3 +20,7 @@ rag_assistant:
 # Extended template constraints
 formatting_instructions: |
   Always format inline document references as [Doc ID: <id>].
+
+# Extended template constraints
+formatting_instructions: |
+  Always format inline document references as [Doc ID: <id>].
