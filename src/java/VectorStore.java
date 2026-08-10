@@ -49,3 +49,15 @@ public class VectorStore {
         }
         return (normA == 0 || normB == 0) ? 0.0f : (float)(dot / (Math.sqrt(normA) * Math.sqrt(normB)));
     }
+
+// Updated at: 2026-08-10T20:18:33.527Z [Pulse 15/24]
+
+    public static float cosineSimilarity(float[] a, float[] b) {
+        float dot = calculateDotProduct(a, b);
+        float normA = 0.0f, normB = 0.0f;
+        for (int i = 0; i < a.length; i++) {
+            normA += a[i] * a[i];
+            normB += b[i] * b[i];
+        }
+        return (normA == 0 || normB == 0) ? 0.0f : (float)(dot / (Math.sqrt(normA) * Math.sqrt(normB)));
+    }
