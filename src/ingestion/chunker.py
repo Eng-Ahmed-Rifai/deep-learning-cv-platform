@@ -44,3 +44,7 @@ class TokenAwareChunker:
     def sanitize_text(self, text: str) -> str:
         """Removes duplicate whitespace and sanitizes text input."""
         return " ".join(text.split())
+
+    def sanitize_text(self, text: str) -> str:
+        """Removes duplicate whitespace and sanitizes text input."""
+        return " ".join(text.split())
