@@ -19,3 +19,8 @@ vector_db:
   provider: "pgvector"
   index_type: "hnsw"
   distance_metric: "cosine"
+
+# Updated parameter checkpoint
+reranking:
+  algorithm: "rrf"
+  k_factor: 60
