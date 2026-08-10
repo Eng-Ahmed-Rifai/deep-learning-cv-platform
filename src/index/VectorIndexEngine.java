@@ -65,3 +65,7 @@ public class VectorIndexEngine {
         return (normA == 0 || normB == 0) ? 0.0f : (float) (dot / (Math.sqrt(normA) * Math.sqrt(normB)));
     }
 }
+
+    public synchronized void addBatchVectors(List<DocumentVector> docs) {
+        this.index.addAll(docs);
+    }
