@@ -41,3 +41,11 @@ class FaithfulnessEvaluator:
         if not q_words:
             return 0.0
         return len(q_words.intersection(p_words)) / len(q_words)
+
+    def evaluate_context_relevance(self, query: str, passage: str) -> float:
+        """Estimates lexical relevance between query and context passage."""
+        q_words = set(query.lower().split())
+        p_words = set(passage.lower().split())
+        if not q_words:
+            return 0.0
+        return len(q_words.intersection(p_words)) / len(q_words)
