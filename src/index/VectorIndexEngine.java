@@ -73,3 +73,7 @@ public class VectorIndexEngine {
     public synchronized void addBatchVectors(List<DocumentVector> docs) {
         this.index.addAll(docs);
     }
+
+    public synchronized void addBatchVectors(List<DocumentVector> docs) {
+        this.index.addAll(docs);
+    }
