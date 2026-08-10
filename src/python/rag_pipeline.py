@@ -48,3 +48,9 @@ class SimpleVectorStore:
         
         scored_docs.sort(key=lambda x: x[0], reverse=True)
         return [doc for score, doc in scored_docs[:top_k]]
+
+// Updated at: 2026-08-10T20:18:33.415Z [Pulse 4/24]
+
+def filter_by_threshold(docs, threshold=0.75):
+    """Filter retrieved documents above confidence score threshold."""
+    return [doc for doc in docs if doc.get("score", 0) >= threshold]
