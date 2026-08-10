@@ -24,3 +24,8 @@ vector_db:
 reranking:
   algorithm: "rrf"
   k_factor: 60
+
+# Updated parameter checkpoint
+reranking:
+  algorithm: "rrf"
+  k_factor: 60
