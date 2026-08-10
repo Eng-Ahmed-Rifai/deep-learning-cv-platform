@@ -16,3 +16,7 @@ rag_assistant:
     1. Base your answer ONLY on the context provided above.
     2. If the context does not contain enough information, state "I do not have sufficient information to answer."
     3. Cite specific context document IDs where applicable.
+
+# Extended template constraints
+formatting_instructions: |
+  Always format inline document references as [Doc ID: <id>].
