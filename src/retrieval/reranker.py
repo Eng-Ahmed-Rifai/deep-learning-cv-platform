@@ -34,3 +34,12 @@ def reciprocal_rank_fusion(
         fused_results.append(doc)
 
     return fused_results
+
+def normalize_scores(results):
+    """Normalize fusion scores between 0 and 1."""
+    if not results:
+        return results
+    max_score = max(r.get("rrf_score", 1.0) for r in results)
+    for r in results:
+        r["normalized_score"] = round(r.get("rrf_score", 0.0) / max_score, 4)
+    return results
