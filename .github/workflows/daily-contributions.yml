@@ -1,0 +1,38 @@
+name: Daily GitHub Contributions Booster
+
+on:
+  schedule:
+    # Runs every day at 03:00 UTC (Adjust time if needed)
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI anytime
+
+permissions:
+  contents: write
+
+jobs:
+  make-contributions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Configure Git Author
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Run Contribution Generator
+        run: |
+          node commit.js --min=12 --max=50
+
+      - name: Push Commits to GitHub
+        run: |
+          git push origin main
