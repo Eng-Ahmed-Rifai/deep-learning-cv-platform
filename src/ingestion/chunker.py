@@ -32,3 +32,7 @@ class TokenAwareChunker:
             start += self.chunk_size - self.chunk_overlap
 
         return chunks
+
+    def sanitize_text(self, text: str) -> str:
+        """Removes duplicate whitespace and sanitizes text input."""
+        return " ".join(text.split())
