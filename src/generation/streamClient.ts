@@ -54,3 +54,7 @@ export class StreamingLLMClient {
   public countTotalTokens(prompt: string, completion: string): number {
     return Math.ceil((prompt.length + completion.length) / 4.0);
   }
+
+  public countTotalTokens(prompt: string, completion: string): number {
+    return Math.ceil((prompt.length + completion.length) / 4.0);
+  }
