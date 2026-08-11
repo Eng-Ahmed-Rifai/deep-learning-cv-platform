@@ -67,6 +67,14 @@ console.log(`📊 Target Commits Today: ${totalCommits} (Range: ${minCommits}-${
 
 let successCount = 0;
 
+const gitEnv = {
+  ...process.env,
+  GIT_AUTHOR_NAME: 'Eng-Ahmed-Rifai',
+  GIT_AUTHOR_EMAIL: '110114267+Eng-Ahmed-Rifai@users.noreply.github.com',
+  GIT_COMMITTER_NAME: 'Eng-Ahmed-Rifai',
+  GIT_COMMITTER_EMAIL: '110114267+Eng-Ahmed-Rifai@users.noreply.github.com'
+};
+
 for (let i = 0; i < totalCommits; i++) {
   const task = visionTasks[Math.floor(Math.random() * visionTasks.length)];
   
@@ -74,8 +82,8 @@ for (let i = 0; i < totalCommits; i++) {
 
   if (!isDryRun) {
     try {
-      execSync(`git add "${task.target}"`, { stdio: 'pipe' });
-      execSync(`git commit -m "${task.msg}"`, { stdio: 'pipe' });
+      execSync(`git add "${task.target}"`, { stdio: 'pipe', env: gitEnv });
+      execSync(`git commit -m "${task.msg}"`, { stdio: 'pipe', env: gitEnv });
       successCount++;
     } catch (err) {
       console.error(`❌ Commit failed for task ${i + 1}:`, err.message);
